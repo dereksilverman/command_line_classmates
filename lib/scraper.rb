@@ -10,22 +10,23 @@ class Scraper
 	end
 
 	def get_twitter
-		get_twitter = @html.css('.twitter').text.split
-		get_twitter.select {|item| item.include?("@")}
+		html.css('.twitter').text.split
 
 	end
 
 	def get_link
-		get_link = @html.css('.blog').map {|link| link["href"]}
-	
+		html.css('.blog').map {|link| link["href"]}
+
 	end
 
-
+	def get_name
+		html.search("h3").text.split(/(?<=[a-z.])(?=[A-Z])/)
+	end	
 
 end
 
-my_scraper = Scraper.new("http://flatironschool-bk.herokuapp.com/")
-puts my_scraper.get_twitter	
-puts my_scraper.get_link
-puts my_scraper.get_name
+#my_scraper = Scraper.new("http://flatironschool-bk.herokuapp.com/")
+#puts my_scraper.get_twitter	
+#puts my_scraper.get_link
+#puts my_scraper.get_name
 
