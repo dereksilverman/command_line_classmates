@@ -10,32 +10,43 @@ class Scraper
 	end
 
 	def get_twitter
-		html.css('.twitter').text.split
+		twitter_url = []
+		student_html = html.search(".student")
+		student_html.each do |twitter|
+			if twitter.search(".twitter")[0].nil?
+				twitter_url << "none"
+			else
+				twitter_url << twitter.search(".twitter")[0]["href"]
+			end
+			
+		end
+		twitter_url
+	end 
 
-	end
 
-	def get_link
-		html.css('.blog').map {|link| link["href"]}
-
-	end
-
-	def get_name
-		html.search("h3").text.split(/(?<=[a-z.])(?=[A-Z])/)
-	end	
+#	def get_name
+#		 html.search("h3").text.split(/(?<=[a-z.])(?=[A-Z])/)
+#	end	
 
 
 	def get_name_wo_regex
-		all = html.search("h3")
-		all.collect do |h3|
-			h3.text
+		html.search("h3").map do |name|
+			name.text
 		end
 	end	
 
+	def get_blog
+		blog_url = []
+		student_html = html.search(".student")
+		student_html.each do |blog|
+			if blog.search(".blog")[0].nil?
+				blog_url << "none"
+			else
+				blog_url << blog.search(".blog")[0]["href"]
+			end
+		end
+		blog_url
+	end
 end
 
-my_scraper = Scraper.new("http://flatironschool-bk.herokuapp.com/")
-#puts my_scraper.get_twitter	
-#puts my_scraper.get_link
-#puts my_scraper.get_name
-puts my_scraper.get_name_wo_regex
 
